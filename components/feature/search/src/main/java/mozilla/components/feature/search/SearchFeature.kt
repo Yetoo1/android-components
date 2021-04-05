@@ -44,8 +44,6 @@ class SearchFeature(
                 // Do nothing if searchRequest or sessionId is null
                 .mapNotNull { pair -> pair.toNullablePair() }
                 // We may see repeat values if other state changes before we handle the request.
-                // Filter these out.
-                .distinctUntilChangedBy { (searchRequest, _) -> searchRequest }
                 .collect { (searchRequest, sessionId) ->
                     performSearch(searchRequest, sessionId)
                     store.dispatch(ContentAction.ConsumeSearchRequestAction(sessionId))
